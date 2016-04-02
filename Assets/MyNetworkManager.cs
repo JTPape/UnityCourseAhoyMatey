@@ -32,19 +32,24 @@ public class MyNetworkManager : NetworkManager
 
 	public override void OnStartHost ()
 	{
-		
 		Debug.Log ("" + Time.timeSinceLevelLoad + " Host [" + singleton.networkAddress + "] [" + Network.player.ipAddress + "] Started Successfully");
 	}
 
 	public override void OnStartClient (NetworkClient myClient)
 	{
 		Debug.Log ("" + Time.timeSinceLevelLoad + " Client " + myClient + " requested start");
+		InvokeRepeating ("PrintDots", 0f, 1f);
 	}
 
 	public override void OnClientConnect (NetworkConnection conn)
 	{
-
+		CancelInvoke ();
 		Debug.Log ("" + Time.timeSinceLevelLoad + " Client connected to " + conn.address);
 		base.OnClientConnect (conn);
+	}
+
+	void PrintDots ()
+	{
+		Debug.Log (".");
 	}
 }

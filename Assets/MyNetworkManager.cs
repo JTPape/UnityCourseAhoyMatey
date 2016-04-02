@@ -24,10 +24,16 @@ public class MyNetworkManager : NetworkManager
 	}
 
 
+	public override void OnServerError (NetworkConnection conn, int errorCode)
+	{
+		Debug.Log ("Server Error: " + errorCode);
+		base.OnServerError (conn, errorCode);
+	}
+
 	public override void OnStartHost ()
 	{
 		
-		Debug.Log ("" + Time.timeSinceLevelLoad + " Host Started Successfully");
+		Debug.Log ("" + Time.timeSinceLevelLoad + " Host [" + singleton.networkAddress + "] [" + Network.player.ipAddress + "] Started Successfully");
 	}
 
 	public override void OnStartClient (NetworkClient myClient)
@@ -39,6 +45,6 @@ public class MyNetworkManager : NetworkManager
 	{
 
 		Debug.Log ("" + Time.timeSinceLevelLoad + " Client connected to " + conn.address);
-//		base.OnClientConnect (conn);
+		base.OnClientConnect (conn);
 	}
 }

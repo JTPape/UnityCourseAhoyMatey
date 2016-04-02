@@ -6,12 +6,15 @@ using UnityStandardAssets.CrossPlatformInput;
 public class Player : NetworkBehaviour
 {
 
-	private Vector3 inputValue;
+	public float moveScalar = 0.3f;
+	private Vector3 inputValue, rotateValue;
 
-	// Use this for initialization
-	void Start ()
+	public override void OnStartLocalPlayer ()
 	{
-	
+		base.OnStartLocalPlayer ();
+		GetComponentInChildren <Camera> ().enabled = true;
+		GetComponentInChildren <AudioListener> ().enabled = true;
+
 	}
 	
 	// Update is called once per frame
@@ -21,11 +24,18 @@ public class Player : NetworkBehaviour
 			return; 
 		}
 
-		inputValue.x = CrossPlatformInputManager.GetAxis ("Horizontal");
-		inputValue.z = CrossPlatformInputManager.GetAxis ("Vertical");
+
+
+		inputValue.x = 0f;
+		inputValue.z = CrossPlatformInputManager.GetAxis ("Vertical") * moveScalar;
 		inputValue.y = 0f;
 
+		rotateValue.x = 0f;
+		rotateValue.y = CrossPlatformInputManager.GetAxis ("Horizontal");
+		rotateValue.z = 0f;
+
 		transform.Translate (inputValue);
+		transform.Rotate (rotateValue);
 	}
 
 

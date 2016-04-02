@@ -1,0 +1,35 @@
+﻿using UnityEngine;
+using System.Collections;
+using UnityEngine.Networking;
+
+public class MyHud : NetworkManager
+{
+
+	NetworkManager networkManager;
+
+	// Use this for initialization
+	void Start ()
+	{
+	
+		networkManager = GetComponent <NetworkManager> ();
+	}
+	
+	// Update is called once per frame
+	void Update ()
+	{
+	
+	}
+
+	public void MyStartHost ()
+	{
+		networkManager.StartHost ();
+		Debug.Log ("Host Starting at: " + Time.timeSinceLevelLoad + "...");
+	}
+
+
+	public override void OnStartHost ()
+	{
+		
+		Debug.Log ("Host Started Successfully at: " + Time.timeSinceLevelLoad);
+	}
+}
